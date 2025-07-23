@@ -1,3 +1,4 @@
+create or replace view ops.report_paymets as
 WITH conciliated AS (
   SELECT participant_email
   FROM nat.wetravel_participants wp
@@ -41,7 +42,7 @@ pays AS (
   FROM participants_data pd
   LEFT JOIN ops.conciliated_payments cp 
     ON cp.participant_email = pd.participant_email
-  WHERE pd.status = 'not_conciliated' AND cp.state != 0
+  WHERE pd.status = 'not_conciliated' AND cp.state = 1 
   UNION ALL
   SELECT 
     pd.participant_email,
@@ -58,3 +59,8 @@ SELECT r.*, p.total_amount, p.n_participants, p.amount_per_participant
 FROM pays p
 LEFT JOIN ops.report r 
   ON r.trip_id = p.trip_id AND r.email = p.participant_email
+UNION ALL
+select r.*, null as total_amount, null as n_participants, null as amount_per_participant
+from ops.conciliated_payments ocp
+LEFT JOIN ops.report r on r.email = ocp.typeform_email
+where ocp.state = 2
