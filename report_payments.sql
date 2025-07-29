@@ -28,7 +28,7 @@ participants_data AS (
   LEFT JOIN reembolsos r 
     ON r.trip_id = wp.trip_id AND r.buyer_email = wp.buyer_email
   -- WHERE wp.trip_id = 'Columbia_Chile_Club'
-    AND r.total_amount > 0
+    where r.total_amount > 0
 ),
 pays AS (
   SELECT 
