@@ -1,4 +1,4 @@
-create or replace view ops.report_paymets as
+create or replace view ops.report_payments as
 WITH conciliated AS (
   SELECT participant_email
   FROM nat.wetravel_participants wp
