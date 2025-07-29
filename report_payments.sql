@@ -54,6 +54,7 @@ pays AS (
     pd.amount_per_participant
   FROM participants_data pd
   WHERE pd.status = 'conciliated'
+  -- los not conciliated son los que se deben arreglar en el sheet conciliated_payments
 )
 SELECT r.*, p.total_amount, p.n_participants, p.amount_per_participant
 FROM pays p
