@@ -4,7 +4,7 @@ ta.first_name, ta.last_name, ta.phone_number, ta.email, ta.food_restrictions, ta
 from  ops.report_payments ta 
 left join nat.middle_procs_dipcher tra on tra.email = ta.email 
 left join ops.trips t on t.trip_id = tra.trip_id and t.add_on_id = tra.add_on_id
-where t.add_on_id is not null 
+where t.add_on_id is not null and Tipo_gasto in ('viaje', 'add_on')
   and t.start_date between DATE_SUB(CURRENT_DATE(), INTERVAL 2 MONTH)
                       and DATE_ADD(CURRENT_DATE(), INTERVAL 7 MONTH)
 union all
@@ -17,6 +17,6 @@ from ops.trips t
 left join ops.report_payments ta on t.trip_id = ta.trip_id
 --left join ops.partners_procs p on p.od_id = SAFE_CAST(t.od_id AS INT64)
 where 
-  t.add_on_id is null
+  t.add_on_id is null and  Tipo_gasto in ('viaje', 'add_on')
   and t.start_date between DATE_SUB(CURRENT_DATE(), INTERVAL 2 MONTH)
                       and DATE_ADD(CURRENT_DATE(), INTERVAL 7 MONTH)
