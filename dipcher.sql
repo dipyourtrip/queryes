@@ -1,5 +1,6 @@
 create or replace table nat.dipcher as  
-select t.trip_id, t.od_id, t.add_on_id, t.start_date, t.end_date, t.start_hour, t.n_users, t.place, t.item, t.detail,
+select t.trip_id, t.od_id, t.add_on_id, cast(t.start_date as string) as start_date, cast(t.end_date as string) as end_date, -- cast dates so webhook works
+t.start_hour, t.n_users, t.place, t.item, t.detail,
 ta.first_name, ta.last_name, ta.phone_number, ta.email, ta.food_restrictions, ta.partner_name
 from  ops.report_payments ta 
 left join nat.middle_procs_dipcher tra on tra.email = ta.email 
@@ -9,7 +10,7 @@ where t.add_on_id is not null and Tipo_gasto in ('viaje', 'add_on')
                       and DATE_ADD(CURRENT_DATE(), INTERVAL 7 MONTH)
 union all
 select 
-  t.trip_id, t.od_id, t.add_on_id, t.start_date, t.end_date, 
+  t.trip_id, t.od_id, t.add_on_id, cast(t.start_date as string) as start_date, cast(t.end_date as string) as end_date, -- cast dates so webhook works
   t.start_hour, t.n_users, t.place, t.item, t.detail,
   ta.first_name, ta.last_name, ta.phone_number, ta.email, 
   ta.food_restrictions, ta.partner_name
