@@ -1,4 +1,4 @@
-create or replace table nat.dipcher as  
+create or replace table tmp.dipcher as  
 select t.trip_id, t.od_id, t.add_on_id, cast(t.start_date as string) as start_date, cast(t.end_date as string) as end_date, -- cast dates so webhook works
 t.start_hour, t.n_users, t.place, t.item, t.detail,
 ta.first_name, ta.last_name, ta.phone_number, ta.email, ta.food_restrictions, ta.partner_name
